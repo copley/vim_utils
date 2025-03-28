@@ -1,209 +1,239 @@
-" Load Pathogen
+"------------------------------------------------------------------------------
+" PATHOGEN INITIALIZATION
+"------------------------------------------------------------------------------
+" Load Pathogen (plugin manager) so that it can load other plugins in ~/.vim/bundle
 execute pathogen#infect()
+
+" Enable filetype-based plugin/indentation
 filetype plugin indent on
+
+" Enable Vim syntax highlighting
 syntax enable
 
+" Use Python 3 for any Python-based plugins or scripts
 let g:pymode_python = 'python3'
-"__________________________________________________________________█Pathogen init
-map <F7> mzgg=G`z ".cshrc is the bash script file, also file indentation fix
-call pathogen#infect()
-syntax enable
-set iskeyword+=:
-let maplocalleader=","
-let mapleader=","
-filetype plugin indent on "Allows plugin indentation"
-filetype plugin on " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-set showcmd " show command in bottom bar"
-"__________________________________________________________________█Color Settings
-"Color Options > lightning, solarized(dark, light), xterm16, moria, github,
-"sprinkles, moria
+
+"------------------------------------------------------------------------------
+" BASIC SETTINGS
+"------------------------------------------------------------------------------
+" Show partial commands in the bottom bar
+set showcmd
+
+"------------------------------------------------------------------------------
+" COLOR SETTINGS
+"------------------------------------------------------------------------------
+" Some color-related variables for various color schemes
 let g:solarized_termcolors=256
 set t_Co=256
 set background=light
 let g:bluedrake_256=1
-colorscheme default "default "sprinkles "lightning
-" Select colormap: 'soft', 'softlight', 'standard' or 'allblue'
+
+" Use the default color scheme (other options: 'sprinkles', 'lightning', etc.)
+colorscheme default
+
+" Example xterm16 color map settings
 let xterm16_colormap    = 'softlight'
-" Select brightness: 'low', 'med', 'high', 'default' or custom levels.
 let xterm16_brightness  = 'high'
-"set lines=37 columns=90 "For default opening on boot, not working."
-"___________________________________________________________________█Key Mappings
-map<F6> :%s/\t/  /g<CR>:w<CR>
-map<F2> :!ruby 
-map<F12> :NERDTree<CR>
+
+"------------------------------------------------------------------------------
+" KEY MAPPINGS
+"------------------------------------------------------------------------------
+" Replace all tabs with spaces and save
+map <F6> :%s/\t/  /g<CR>:w<CR>
+
+" Run a Ruby command (placeholder—adjust to your needs)
+map <F2> :!ruby 
+
+" Toggle NERDTree with F12
+map <F12> :NERDTree<CR>
+
+" Use system clipboard for copy/paste
 set clipboard=unnamedplus
-"map<F6> :<C-U>'%s/\t/  /g'<CR> "creates No mapping error.
-"map <F2> :echo 'Current time is ' . strftime('%c')<CR>
+
+" Trim trailing whitespace with F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
-"map!<F6>':%s/\s\+$//'<CR> "creates No mapping error. 
-"Now using arrow keys for AutoComplete only
-"remove page up / page down
+
+" Disable certain keys in insert mode (e.g., PageUp, PageDown, Home, End)
 imap <PageUp> <nop>
 imap <PageDown> <nop>
-imap <PageUp> <NOP>
-imap <PageDown> <NOP>
 imap <HOME> <nop>
-imap <HOME> <NOP>
 imap <End> <nop>
-imap <End> <NOP>
+
+" Disable the same keys in normal mode
 nnoremap <PageUp> <nop>
 nnoremap <PageDown> <nop>
-nnoremap <PageUp> <NOP>
-nnoremap <PageDown> <NOP>
 nnoremap <HOME> <nop>
-nnoremap <HOME> <NOP>
 nnoremap <End> <nop>
-nnoremap <End> <NOP>
-nnoremap <C-h> <C-w>h "allow moving between splits easier
-nnoremap <C-j> <C-w>j "allow moving between splits easier
-nnoremap <C-k> <C-w>k "allow moving between splits easier
-nnoremap <C-l> <C-w>l "allow moving between splits easier
-"________________________________________________________________█Indent features
-set smartindent     "Automatically inserts indentation in some cases
-set cindent         "Like smartindent, but stricter and more customisable
-set tabstop=4 " show existing tab with 4 spaces width
-set shiftwidth=4 " when indenting with '>', use 4 spaces width
-set expandtab " On pressing tab, insert 4 spaces
-"_____________________________________________________█Vundle Set up Requirements
+
+" Make Ctrl+h/j/k/l move between splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+"------------------------------------------------------------------------------
+" INDENTATION & WHITESPACE
+"------------------------------------------------------------------------------
+" Enable intelligent indentation
+set smartindent
+set cindent
+
+" Use 4 spaces for a tab
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+"------------------------------------------------------------------------------
+" VUNDLE SETUP REQUIREMENTS
+"------------------------------------------------------------------------------
+" Ensure Vim isn't running in compatibility mode
 set nocompatible
+
+" Add Vundle to the runtime path
 set rtp+=~/.vim/bundle/Vundle.vim
-set number "highlight LineNr ctermfg=grey
-set mouse=a "set mouse to allow clicking in NERDTree
-"Note: Vim script doesnt allow commenting after the method parenthasis.
 
+" Show line numbers
+set number
+
+" Allow mouse usage (useful for NERDTree)
+set mouse=a
+
+" Load Pathogen again (redundant if done at the top, but left here if you prefer)
 execute pathogen#infect()
-filetype plugin on " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
 
-"______________________________________________________________________█Syntastic
-""https://github.com/scrooloose/syntastic"
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+"------------------------------------------------------------------------------
+" SYNTACTIC (SYNTASTIC) SETTINGS
+"------------------------------------------------------------------------------
+" https://github.com/scrooloose/syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-"_____________________________________________________█For Vundle package manager
+
+"------------------------------------------------------------------------------
+" VUNDLE PLUGIN MANAGER
+"------------------------------------------------------------------------------
 call vundle#begin()
-"tern_for_vim -  an additional package for YCM
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'Raimondi/delimitMate'
-Plugin 'vim-auto-save'
-Plugin 'vim-airline/vim-airline'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-rails'
-Plugin 'ternjs/tern_for_vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'ggreer/the_silver_searcher'
-Plugin 'wimstefan/Lightning'
+  " Core Vundle plugin
+  Plugin 'VundleVim/Vundle.vim'
+  
+  " NERDTree for file navigation
+  Plugin 'scrooloose/nerdtree'
+  
+  " Syntastic for syntax checking
+  Plugin 'scrooloose/syntastic'
+  
+  " Auto-closing delimiters
+  Plugin 'Raimondi/delimitMate'
+  
+  " Save files automatically
+  Plugin 'vim-auto-save'
+  
+  " Airline status bar
+  Plugin 'vim-airline/vim-airline'
+  
+  " Surround text objects easily
+  Plugin 'tpope/vim-surround'
+  Plugin 'tpope/vim-repeat'
+  Plugin 'tpope/vim-rails'
+  
+  " Tern for JavaScript code introspection
+  Plugin 'ternjs/tern_for_vim'
+  
+  " CtrlP fuzzy finder
+  Plugin 'ctrlpvim/ctrlp.vim'
+  
+  " Silver Searcher integration
+  Plugin 'ggreer/the_silver_searcher'
+  
+  " Lightning color scheme
+  Plugin 'wimstefan/Lightning'
 call vundle#end()
-"_________________________________________________________█silver_searcher_config
+
+"------------------------------------------------------------------------------
+" SILVER SEARCHER CONFIG
+"------------------------------------------------------------------------------
+" Use ag (the_silver_searcher) with CtrlP
 let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
 let g:ctrlp_use_caching = 0
-"_________________________________________________█Make the 81st column stand out
-"   EITHER the entire 81st column, full-screen...
-"highlight ColorColumn ctermbg=magenta
-"set colorcolumn=81
 
-" OR ELSE just the 81st column of wide lines...
+"------------------------------------------------------------------------------
+" HIGHLIGHT 81ST COLUMN
+"------------------------------------------------------------------------------
+" Color the 81st column to help keep line lengths in check
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 
-" OR ELSE on April Fools day...
-"highlight ColorColumn ctermbg=red ctermfg=blue
-"exec 'set colorcolumn=' . join(range(2,80,3), ',')
-
-"________________Make tabs, trailing whitespace, and non-breaking spaces visible
-exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+"------------------------------------------------------------------------------
+" VISIBLE WHITESPACE
+"------------------------------------------------------------------------------
+" Make tabs, trailing whitespace, and non-breaking spaces visible
+set listchars=tab:»»,trail:·,nbsp:~
 set list
-"________________________________________________█Remapping CAPS terminal command
-"xmodmap -e "keycode 9 = Caps_Lock NoSymbol Caps_Lock"  #Esc to act as Caps Lock
-"xmodmap -e "keycode 66 = Escape NoSymbol Escape"       #Caps Lock to act as Esc
 
-set ruler "Ruler setting"
-set backspace=eol,start,indent " Configure backspace so it acts as it should act
+"------------------------------------------------------------------------------
+" REMAPPING CAPS TERMINAL COMMAND (commented out, for reference)
+"------------------------------------------------------------------------------
+" xmodmap -e "keycode 9 = Caps_Lock NoSymbol Caps_Lock"  #Esc to act as Caps Lock
+" xmodmap -e "keycode 66 = Escape NoSymbol Escape"       #Caps Lock to act as Esc
+
+" Show the ruler in the status line (line/column info)
+set ruler
+
+" Let backspace behave normally over indentation, line breaks, etc.
+set backspace=eol,start,indent
+
+" Let cursor keys wrap lines
 set whichwrap+=<,>,h,l
-"__________________________________________________________________█vim-auto-save
-let g:auto_save = 0 "enables auto save set to 1"
-let g:auto_save_silent = 0  " do not display the auto-save notification
-"_______________________________________________________________█vim-latex config
-" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" can be called correctly.
-set shellslash
 
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
+"------------------------------------------------------------------------------
+" VIM-AUTO-SAVE SETTINGS
+"------------------------------------------------------------------------------
+" Disable auto save by default (set to 1 to enable)
+let g:auto_save = 0
+let g:auto_save_silent = 0
 
-" OPTIONAL: This enables automatic indentation as you type.
-filetype indent on
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-
-" this is mostly a matter of taste. but LaTeX looks good with just a bit
-" of indentation.
-set sw=2
-" TIP: if you write your \label's as \label{fig:something}, then if you
-" type in \ref{fig: and press <C-n> you will automatically cycle through
-" all the figure labels. Very useful!
-set iskeyword+=:
-
-
-"set g:Tex_CompileRule <fmt> =". . ." 
-"set compilation rule (fmt is dvi, pdf, etc.)
-let g:Tex_FormatDependency_pdf = "dvi,pdf"
-"define dependency
-let g:Tex_MultipleCompileFormats = "dvi"
-"generate dvi target in multiple passes (intelligently)
-"let TCLevel 3
-"ignore warnings matching first 3 patterns in
-"let g:Tex_IgnoredWarnings
-"set TCLevel strict
-"display all errors and warnings
-let g:Tex_DefaultTargetFormat = "pdf"
-"set default target to pdf
-let g:Tex_ViewRule_dvi = "xdvi" 
-"set dvi viewer
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_MultipleCompileFormats='pdf, aux'
-let g:vimtex_fold_enabled = 0
-let g:vimtex_quickfix_mode = 2
-let g:vimtex_quickfix_open_on_warning = 1
-let g:vimtex_toc_resize = 0
-let g:vimtex_toc_hide_help = 1
-let g:vimtex_indent_enabled = 1
-let g:vimtex_latexmk_enabled = 1
-let g:vimtex_latexmk_callback = 0
-let g:vimtex_complete_recursive_bib = 0
-set clipboard=unnamedplus "allows for normal Copy/Paste like Windows & Linux"
-"_____________________________________________________________█AutoComplete_SetUp
-"A combination of CTRL n & CTRL o & CTRL x 
+"------------------------------------------------------------------------------
+" AUTOCOMPLETE SETUP
+"------------------------------------------------------------------------------
+" Built-in OmniFunc settings for various filetypes
 set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+
 set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+
 set omnifunc=csscomplete#CompleteCSS
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+
 set omnifunc=phpcomplete#CompletePHP
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-"______________________________________________________________█dragvisuals.vim
+
+"------------------------------------------------------------------------------
+" DRAGVISUALS.VIM
+"------------------------------------------------------------------------------
+" Enable drag-visual block plugin for easy block movement
 runtime plugin/dragvisuals.vim
+
+" Keymaps for dragvisuals
 vmap  <expr>  <LEFT>   DVB_Drag('left')
 vmap  <expr>  <RIGHT>  DVB_Drag('right')
 vmap  <expr>  <DOWN>   DVB_Drag('down')
 vmap  <expr>  <UP>     DVB_Drag('up')
 vmap  <expr>  D        DVB_Duplicate()
-" Remove any introduced trailing whitespace after moving
-let g:DVB_TrimWS = 1
-"__________________________________________________________________█NERDTree
-set modifiable "Allows edit of files in buffer where files are stored."
-autocmd BufEnter * lcd %:p:h "Sets current path to be NERDTree path
-"███████████████████████████████████████████████████████████████████████████████
 
+" Remove trailing whitespace after dragging
+let g:DVB_TrimWS = 1
+
+"------------------------------------------------------------------------------
+" NERDTree SETTINGS
+"------------------------------------------------------------------------------
+" Allow editing files in buffer
+set modifiable
+
+" Auto-change working directory to the file’s location on buffer enter
+autocmd BufEnter * lcd %:p:h
+
+"------------------------------------------------------------------------------
+" END OF .vimrc
+"------------------------------------------------------------------------------
